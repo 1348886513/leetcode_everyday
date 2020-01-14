@@ -37,6 +37,33 @@ class Solution {
     }
 }
 ```
+### 1.14-leetcode55_跳跃游戏
+
+思路：注意题中要求每个位置代表跳跃的最大长度，所以思路从前往后很难实现，故逆向思维，判断最后的每一步能否到达数组最后，从后往前进行跳跃，如果当前值+索引值大于数组的size的话（即到这一步就能跳到最后），让size等于当前的索引值，循环整个数组
+
+循环结束后，判断size的大小，若size==0，即最后只剩下一个元素，则整个数组都可跳到最后，否则就必然跳不到
+
+```java
+class Solution {
+    public boolean canJump(int[] nums) {
+        int size=nums.length-1;
+        if(nums.length==0){
+            return false;
+        }
+        for(int i=nums.length-2;i>=0;i--){
+            if(nums[i]+i>=size){
+                size =i;
+            }
+            
+        }
+        if(size==0){
+            return true;
+        }
+        else return false;
+    }
+}
+```
+
 
 
 

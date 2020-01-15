@@ -84,6 +84,83 @@ class Solution {
     }
 }
 ```
+### 1-15-leetcode60_第K个排列
+
+思路：因为按大小排列，可以根据n和k分别确定每一位的值，找出一个循环条件，即可
+
+tips：学会利用StringBuilder来存储string
+
+​			学会使用List中的ArrayList来存储和增删改查链表
+
+​			(int)Math.ceil(double)的强制类型转化
+
+```java
+class Solution {
+    public String getPermutation(int n, int k) {
+        StringBuilder sb = new StringBuilder();
+        List<Integer> list = new ArrayList<>();
+        for(int i=1;i<=n;i++){
+            list.add(i);
+        }
+        int fac=1,p=n;
+        while(p!=0){
+            fac *=p;
+            p=p-1;
+        }
+        int i=0;
+        int r=1;
+        int m=fac/n;
+        while((n-i)!=0 ){
+            r=(int)Math.ceil((double)k/(double)m);
+            int res =list.get(r-1);
+            sb.append(res);
+            list.remove(r-1);
+            k=k-(r-1)*m;
+            i++;
+            m=(int)Math.ceil((double)m/(double)(n-i));
+            
+        }
+        return sb.toString();
+
+    }
+}
+```
+
+### 1-15-leetcode61_旋转链表
+
+思路：根据题中特点，统计一遍链表中节点的个数，然后把单链表转化为循环链表(即tail.next=head)，然后数到倒数第k个节点，然后分别设置头和尾即可
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head==null || head.next==null || k==0) return head;
+        ListNode p=head;
+        int count=1;
+        while(p.next!=null){
+            count++;
+            p=p.next;
+        }
+        k %=count;
+        if(k==0) return head;
+        p.next=head;
+        for(int i=0;i<count-k;i++){
+            p=p.next;
+        }
+        ListNode newHead=p.next;
+        p.next=null;
+        return newHead;
+    }
+}
+```
+
 
 
 

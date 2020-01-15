@@ -160,6 +160,36 @@ class Solution {
     }
 }
 ```
+### 1-15-leetcode62_不同路径
+
+思路：基本动态规划问题，找出动态dp方程，求出每个点的最大路径数
+
+```java
+class Solution {
+    public int uniquePaths(int m, int n) {
+        /**
+        * 基本动态规划问题，将复杂问题化简成一个个简单的子问题
+        * dp[i][j]表示到i，j的路数
+        * 上和左边界均为1，其他等于左一个和上一个之和
+        */
+        int [][] dp = new int[m][n];
+        for(int i=0;i<m;i++){
+            dp[i][0]=1;
+        }
+        for(int j=0;j<n;j++){
+            dp[0][j]=1;
+        }
+        for(int i=1;i<m;i++){
+            for(int j=1;j<n;j++){
+                dp[i][j]=dp[i-1][j]+dp[i][j-1];
+            }
+        }
+        return dp[m-1][n-1];
+
+    }
+}
+```
+
 
 
 

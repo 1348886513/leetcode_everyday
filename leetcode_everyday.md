@@ -189,6 +189,55 @@ class Solution {
     }
 }
 ```
+### 1-16-leetcode67_二进制求和
+
+思路：二进制相加问题为：每个位数对应相加：0+0=0，1+0=1，1+1=0但进位1
+
+根据以上规则，将输入的两个字符串先把长度定为一致，短的那个在前面补0即可，然后对应相加（字符串转为数字即s.charAt(i)-'0'），用count代表进位，最后将结果反转后转化为字符串即可
+
+```java
+class Solution {
+    public String addBinary(String a, String b) {
+        StringBuilder sb = new StringBuilder();
+        if(a.length()<b.length()){
+            String tmp=a;
+            a=b;
+            b=tmp;
+        }
+        int l = a.length()-b.length();
+        for(int i=0;i<l;i++){
+            b = '0'+b;
+        }
+        int count=0;
+        for(int i=a.length()-1;i>=0;i--){
+           int sum=count;
+           sum +=(a.charAt(i)-'0');
+           sum +=(b.charAt(i)-'0');
+           if(sum==0){
+            sb.append(0);
+            count=0;
+           } 
+           else if(sum==1){
+             sb.append(1);
+             count=0;
+           } 
+           else if(sum==2){
+               sb.append(0);
+                count=1;
+           }
+           else{
+               sb.append(1);
+               count=1;
+           }
+        }
+        if(count!=0){
+            sb.append(1);
+        }
+        return sb.reverse().toString();
+    }
+}
+```
+
 
 
 

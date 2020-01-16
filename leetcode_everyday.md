@@ -237,6 +237,47 @@ class Solution {
     }
 }
 ```
+### 1-16-leetcode-71_简化路径
+
+思路：用栈，先将String按“/"分割，然后遇到".."出栈，遇到路径的话进栈
+
+tips：
+
+- ” “表示字符串，’ ‘表示char，两者不能比较的
+- 将字符串按照”/“ 分割成字符串数组 String[] a =path.split("/")
+- 字符串数组的比较中==和equals是完全不同的
+  - ==指地址相同，equals指值相同
+
+故此题要用equals
+
+```java
+class Solution {
+    public String simplifyPath(String path) {
+        String[] a = path.split("/");
+        StringBuilder sb = new StringBuilder();
+        Stack<String> stack = new Stack<>();
+        for(int i=0;i<a.length;i++){
+            if(!a[i].equals("..") && !a[i].equals(".") && !a[i].equals("")){
+                stack.push(a[i]);
+            }
+            else if(!stack.isEmpty() && a[i].equals("..")){
+                stack.pop();
+            }
+        }
+        if(stack.isEmpty()){
+            return "/";
+        }
+        else{
+             for(int i=0;i<stack.size();i++){
+            sb.append("/"+stack.get(i));
+        }
+        return sb.toString();
+        }
+       
+    }
+}
+```
+
 
 
 

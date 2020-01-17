@@ -277,6 +277,54 @@ class Solution {
     }
 }
 ```
+### 1-17-leetcode72_编辑距离
+
+思路：动态规划问题，看代码注释
+
+tips: Math.min()只能比较两个值的大小，若多个需要挑最小，则需要再加一个Min
+
+- 找边界
+- 找dp条件(根据前一个)
+- 求出所有的dp[i][j]
+
+```java
+class Solution {
+    public int minDistance(String word1, String word2) {
+        /** 
+        动态规划，dp[i][j]：表示word1和word2的前i和前j个的操作次数
+        将结果转化为求dp[i-1][j]、dp[i][j-1]、dp[i-1][j-1]的操作次数
+        dp[i][j]=dp[i-1][j]+1
+        dp[i][j]=dp[i][j-1]+1
+        dp[i][j]=dp[i-1][j-1](当第i位和第j位不等时，需要+1)
+        */
+        int m=word1.length();
+        int n=word2.length();
+        int[][] dp=new int[m+1][n+1];
+        //边界初始化
+        for(int i=0;i<m+1;i++){
+            dp[i][0]=i;
+        }
+        for(int j=0;j<n+1;j++){
+            dp[0][j]=j;
+        }
+        int prior_ij=0;
+        for(int i=1;i<m+1;i++){
+            for(int j=1;j<n+1;j++){
+                int prior_i = dp[i-1][j]+1;
+                int prior_j = dp[i][j-1]+1;
+                if(word1.charAt(i-1)!=word2.charAt(j-1)){
+                     prior_ij = dp[i-1][j-1]+1;
+                }
+                else  prior_ij=dp[i-1][j-1];
+                dp[i][j]=Math.min(prior_i,Math.min(prior_j,prior_ij));
+            }
+        }
+        return dp[m][n];
+
+    }
+}
+```
+
 
 
 

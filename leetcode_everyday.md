@@ -379,6 +379,36 @@ class Solution {
     }
 }
 ```
+### 1-19-leetcode78_子集
+
+思路：回溯算法
+
+```java
+class Solution {
+    /**
+    回溯算法，判断条件，contains(temp),回溯寻找满足条件的结果
+     */
+    public void backtrace(int[] nums,int start,List<List<Integer>> res,List<Integer> temp){
+        if(start>nums.length) return;
+        if(! res.contains(temp)){
+            res.add(new LinkedList<>(temp));
+        }
+        for(int i=start;i<nums.length;i++){
+            temp.add(nums[i]);
+            backtrace(nums,i+1,res,temp);
+            temp.remove(temp.size()-1);
+        }
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        backtrace(nums,0,res,new LinkedList<>());
+        return res;
+    }
+}
+```
+
 
 
 
